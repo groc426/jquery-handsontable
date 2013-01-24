@@ -1803,11 +1803,11 @@ Handsontable.Core = function (rootElement, settings) {
   };
 
   this.getFootHeader = function (col) {
-    if (Object.prototype.toString.call(priv.settings.footHeaders) === '[object Array]' && priv.settings.footHeaders[col] !== void 0) {
-      return priv.settings.footHeaders[col];
+    if (Object.prototype.toString.call(priv.settings.colFooters) === '[object Array]' && priv.settings.colFooters[col] !== void 0) {
+      return priv.settings.colFooters[col];
     }
     else {
-      return priv.settings.footHeaders;
+      return priv.settings.colFooters;
     }
   };
 
@@ -2134,7 +2134,7 @@ Handsontable.TableView = function (instance) {
     height: myHeight,
     frozenColumns: settings.rowHeaders ? [instance.getRowHeader] : null,
     columnHeaders: settings.colHeaders ? instance.getColHeader : null,
-    footerHeaders: settings.footHeaders ? instance.getFootHeader : null,
+    colFooters: settings.colFooters ? instance.getFootHeader : null,
     columnWidth: instance.getColWidth,
     cellRenderer: function (row, column, TD) {
       that.applyCellTypeMethod('renderer', TD, {row: row, col: column}, instance.getDataAtCell(row, column));
@@ -2625,7 +2625,7 @@ var texteditor = {
     var settings = instance.getSettings();
     var rowHeadersCount = settings.rowHeaders === false ? 0 : 1;
     var colHeadersCount = settings.colHeaders === false ? 0 : 1;
-    var footHeadersCount = settings.footHeaders === false ? 0 : 1;
+    var colFootersCount = settings.colFooters === false ? 0 : 1;
 
     if (editTop < 0) {
       editTop = 0;
@@ -2640,7 +2640,7 @@ var texteditor = {
     if (colHeadersCount > 0 && parseInt($td.css('border-left-width')) > 0) {
       editLeft += 1;
     }
-    if (footHeadersCount > 0 && parseInt($td.css('border-left-width')) > 0) {
+    if (colFootersCount > 0 && parseInt($td.css('border-left-width')) > 0) {
       editLeft += 1;
     }
 
@@ -3883,7 +3883,7 @@ function Walkontable(settings) {
     offsetColumn: 0,
     frozenColumns: null,
     columnHeaders: false,
-    footerHeaders: false,
+    colFooters: false,
     totalRows: void 0,
     totalColumns: void 0,
     width: null,
@@ -3950,8 +3950,8 @@ function Walkontable(settings) {
     for (var c = 0, clen = this.wtTable.TFOOT.childNodes[0].childNodes.length; c < clen; c++) {
       originalFooters.push(this.wtTable.TFOOT.childNodes[0].childNodes[c].innerHTML);
     }
-    if (!this.hasSetting('footerHeaders')) {
-      this.settings.footerHeaders = function (column) {
+    if (!this.hasSetting('colFooters')) {
+      this.settings.colFooters = function (column) {
         return originalFooters[column];
       }
     }
@@ -4967,7 +4967,7 @@ function WalkontableTable(instance) {
     }
   }
 
-  if (this.instance.hasSetting('footerHeaders')) {
+  if (this.instance.hasSetting('colFooters')) {
     if (!this.TFOOT.childNodes.length) {
       var TR = document.createElement('TR');
       this.TFOOT.appendChild(TR);
@@ -5017,7 +5017,7 @@ WalkontableTable.prototype.adjustAvailableNodes = function () {
   }
 
     //adjust TFOOT
-  if (this.instance.hasSetting('footerHeaders')) {
+  if (this.instance.hasSetting('colFooters')) {
     while (this.tfootChildrenLength < displayTds + frozenColumnsCount) {
       this.TFOOT.firstChild.appendChild(document.createElement('TD'));
       this.tfootChildrenLength++;
@@ -5154,7 +5154,7 @@ WalkontableTable.prototype._doDraw = function () {
   }
 
   //draw TFOOT
-  if (frozenColumnsCount && this.instance.hasSetting('footerHeaders')) {
+  if (frozenColumnsCount && this.instance.hasSetting('colFooters')) {
     for (c = 0; c < frozenColumnsCount; c++) {
       TH = this.TFOOT.childNodes[0].childNodes[c];
       if (typeof frozenColumns[c] === "function") {
@@ -5169,9 +5169,9 @@ WalkontableTable.prototype._doDraw = function () {
     }
   }
 
-  if (this.instance.hasSetting('footerHeaders')) {
+  if (this.instance.hasSetting('colFooters')) {
     for (c = 0; c < displayTds; c++) {
-      this.TFOOT.childNodes[0].childNodes[frozenColumnsCount + c].innerHTML = this.instance.getSetting('footerHeaders', offsetColumn + c);
+      this.TFOOT.childNodes[0].childNodes[frozenColumnsCount + c].innerHTML = this.instance.getSetting('colFooters', offsetColumn + c);
     }
   }
 
