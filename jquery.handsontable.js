@@ -1,4 +1,5 @@
 /**
+ * SEARCH FOR: getColheader, colHeaders, THEAD, colHeadersCount, originalHeaders, afterGetColHeader, <thead>
  * Handsontable 0.8.3
  * Handsontable is a simple jQuery plugin for editable tables with basic copy-paste compatibility with Excel and Google Docs
  *
